@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { select, geoPath, geoMercator } from "d3";
 import useResizeObserver from "../useResizeObserver";
 import CountryModal from "./CountryModal";
+import axios, { AxiosError } from "axios";
 
 const continentColors = {
   Africa: "#f4a582",
@@ -18,10 +19,28 @@ const WorldMap = ({ data }) => {
   const dimensions = useResizeObserver(wrapperRef);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [countryDetails, setCountryDetails] = useState(null);
+  const [errorMessage,setErrorMessage]=useState(null);
 
   const handleModalClose = () => {
     setSelectedCountry(null);
     setShowModal(false); 
+  };
+  const openModal = async (feature) => {
+    try{
+    const response= await axios.get(`https://restcountries.com/v3.1/name/${feature.properties.name}`);
+   
+   if(response?.data.length>0){
+    const countryData=response?.data.filter((country) => country?.name?.common === feature?.properties?.name);
+    setCountryDetails(countryData?.[0]);
+    setSelectedCountry(feature);
+    setShowModal(true);
+   }
+    }
+    catch(error){
+      const errorMessage = error;
+      setErrorMessage(errorMessage);
+    }
   };
   useEffect(() => {
     const svg = select(svgRef.current);
@@ -37,10 +56,8 @@ const WorldMap = ({ data }) => {
       .selectAll(".country")
       .data(data.features)
       .join("path")
-      .on("click", (event, feature) => {
-        setSelectedCountry(feature);
-        setShowModal(true); 
-      })
+      .on("click", (event, feature) => openModal(feature)
+       )
       .attr("class", "country")
       .transition()
       .attr("fill", (feature) => {
@@ -79,7 +96,10 @@ const WorldMap = ({ data }) => {
         show={showModal}
         onClose={handleModalClose} 
         country={selectedCountry}
+        countryDetails={countryDetails}
+        error={errorMessage}
       />
+
     </div>
   );
 };
