@@ -2,14 +2,16 @@ import React from "react";
 import WordlMap from "./components/WorldMap";
 import data from "./WorldData.geo.json";
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import TakeaQuiz from "./components/TakeaQuiz"
 
-function App() {
+
+const App=()=> {
   return (
-    <>
-      <h2>World Map with color code for continents</h2>
-      <WordlMap data={data} />
-     
-    </>
+    <Routes>
+      <Route path="/" element={<WordlMap data={data} />} />
+      <Route path="/takeaQuiz" element={<TakeaQuiz />} />
+      </Routes>
   );
 }
 

@@ -2,7 +2,9 @@ import React, { useRef, useEffect, useState } from "react";
 import { select, geoPath, geoMercator } from "d3";
 import useResizeObserver from "../useResizeObserver";
 import CountryModal from "./CountryModal";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+
 
 const continentColors = {
   Africa: "#f4a582",
@@ -21,11 +23,13 @@ const WorldMap = ({ data }) => {
   const [showModal, setShowModal] = useState(false);
   const [countryDetails, setCountryDetails] = useState(null);
   const [errorMessage,setErrorMessage]=useState(null);
-
+const Navigate = useNavigate();
+ 
   const handleModalClose = () => {
     setSelectedCountry(null);
     setShowModal(false); 
   };
+  
   const openModal = async (feature) => {
     try{
     const response= await axios.get(`https://restcountries.com/v3.1/name/${feature.properties.name}`);
@@ -70,6 +74,8 @@ const WorldMap = ({ data }) => {
 );
 
   return (
+    <>
+     <h2>World Map with color code for continents</h2>
     <div ref={wrapperRef} style={{ display: "flex", flexDirection: "row", marginBottom: "2rem" }}>
       <svg ref={svgRef} style={{ flex: 1 }}></svg>
       <div style={{ marginLeft: "1rem" }}>
@@ -90,8 +96,8 @@ const WorldMap = ({ data }) => {
             </li>
           ))}
         </ul>
+        
       </div>
-
       <CountryModal
         show={showModal}
         onClose={handleModalClose} 
@@ -101,6 +107,8 @@ const WorldMap = ({ data }) => {
       />
 
     </div>
+    <div><button onClick={()=>Navigate("/takeaQuiz")} >Take a Quiz</button></div>
+    </>
   );
 };
 
