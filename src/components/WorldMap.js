@@ -4,6 +4,7 @@ import useResizeObserver from "../useResizeObserver";
 import CountryModal from "./CountryModal";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import "../CSS/CountryModal.css";
 
 
 const continentColors = {
@@ -107,7 +108,7 @@ const Navigate = useNavigate();
       />
 
     </div>
-    <div><button onClick={()=>Navigate("/continentList")} >Take a Quiz</button></div>
+    <div><button className="quiz-button" onClick={()=>Navigate("/continentList")} >Take a Quiz</button></div>
     </>
   );
 };
