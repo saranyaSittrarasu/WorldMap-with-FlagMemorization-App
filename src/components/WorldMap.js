@@ -107,7 +107,7 @@ const Navigate = useNavigate();
       />
 
     </div>
-    <div><button onClick={()=>Navigate("/takeaQuiz")} >Take a Quiz</button></div>
+    <div><button onClick={()=>Navigate("/continentList")} >Take a Quiz</button></div>
     </>
   );
 };

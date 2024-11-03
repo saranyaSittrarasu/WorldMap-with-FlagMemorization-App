@@ -1,0 +1,22 @@
+.continentTitle {color: #333;
+    font-Size: 24px;
+    font-Weight: 600;
+    margin-Bottom: 20px }
+
+
+
+.continentList{padding: 10px;
+    font-Size: 16px;
+    width: 400px;
+    border-Radius: 5px;
+    border: 1px solid #ddd;
+    margin-Bottom: 30px;
+    cursor: pointer;
+    box-Shadow: 0px 4px 8px rgba(0, 0, 0, 0.1)}
+
+.imgFlag{border: 3px solid #ddd;
+    max-Width: 500px;
+    height: 350px;
+    border-Radius: 10px;
+    box-Shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    margin-Bottom: 20px}
